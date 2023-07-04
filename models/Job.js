@@ -1,24 +1,17 @@
-
-
-//title, summary, description, minSalary, maxSalary, 
-///locations[]
-
 const { default: mongoose } = require("mongoose");
 
-const JobSchema = mongoose.Schema({
-    addDate:{type:Date, default:Date.now},
-    title:String,
-    summary: String,
-    description:String,
-    minSalary:Number,
-    maxSalary:Number,
-    locations:[{type:mongoose.Schema.Types.ObjectId, ref:'Location'}]
-})
+const jobSchema = new mongoose.Schema({
+  title: String,
+  summary: String,
+  description: String,
+  minSalary: Number,
+  maxSalary: Number,
+  addDate: { type: Date, default: Date.now },
+  locations: [{ type: mongoose.Schema.Types.ObjectId, ref: "Location" }],
+});
 
-
-const Job = mongoose.model('Job', JobSchema)
-
+const Job = new mongoose.model("Job", jobSchema);
 
 module.exports = {
-    Job
-}
+  Job,
+};

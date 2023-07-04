@@ -1,23 +1,23 @@
-const express = require('express');
-const cors = require('cors')
-const { db } = require('./config/db');
-const { locationRoutes } = require('./routes/locationRoutes');
+const express = require("express");
+const { db } = require("./config/db");
+
 const app = express();
-require('dotenv').config()
-const port = 8080;
+
+const cors = require("cors");
+
+const { jobRoutes } = require("./routes/jobRoutes");
+const { locationRoutes } = require("./routes/locationRoutes");
+
+require("dotenv").config();
 
 db.connect();
 
-app.use(express.json())
+app.use(express.json());
 app.use(cors());
 
-app.use('/api/locations', locationRoutes)
+app.use("/api/jobs", jobRoutes);
+app.use("/api/locations", locationRoutes);
 
-app.get('/', async (req, res) => {
-    res.send('OK!')
-})
-
-
-app.listen(port, () => {
-    console.log('Server is running...');
-})
+app.listen(3300, () => {
+  console.log("Server listening on port 3300");
+});

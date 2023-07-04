@@ -1,15 +1,17 @@
 const { default: mongoose } = require("mongoose");
 
+const locationSchema = new mongoose.Schema({
+  name: String,
+  icon: String,
+  jobs: [
+    { type: mongoose.Schema.Types.ObjectId, ref: "Job", autopopulate: true },
+  ],
+});
 
-const LocationSchema = mongoose.Schema({
-    name:String,
-    icon:String,
-    jobs:[{type:mongoose.Schema.Types.ObjectId, ref:'Job'}]
-})
+locationSchema.plugin(require("mongoose-autopopulate"));
 
-const location = mongoose.model('Location', LocationSchema)
-
+const Location = new mongoose.model("Location", locationSchema);
 
 module.exports = {
-    location
-}
+  Location,
+};
