@@ -63,19 +63,21 @@ const jobController = {
     const { id } = req.params;
 
     try {
-      await Job.findByIdAndDelete(id);
-
       const job = await Job.findById(id);
 
       console.log(job);
       const locationIds = job.locations;
 
-      await Job.findByIdAndDelete(id);
-
       await Location.updateMany(
         { _id: { $in: locationIds } },
         { $pull: { jobs: id } }
       );
+
+      const deletedJob = await Job.findByIdAndDelete(id);
+
+      if (!deletedJob) {
+        return res.status(404).json({ message: "Job not found" });
+      }
 
       res.json("Job deleted successfully");
     } catch (error) {
